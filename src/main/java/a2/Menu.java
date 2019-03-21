@@ -4,24 +4,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Menu {
-    private ArrayList<String> items;
-    private HashMap<String, Double> itemPrice;
-    private HashMap<String, ItemType> itemType;
-    private HashMap<String, String> pizzaTypeMethods;
+    private ArrayList<Item> items;
 
     public Menu() {
-
     }
 
-    public Menu(ArrayList<String> items, HashMap<String, Double> itemPrice, HashMap<String, ItemType> itemType, HashMap<String, String> pizzaTypeMethods) {
+    public Menu(ArrayList<Item> items) {
         this.items = items;
-        this.itemPrice = itemPrice;
-        this.itemType = itemType;
-        this.pizzaTypeMethods = pizzaTypeMethods;
+    }
+
+    private Item getItemByName(String name) throws NoSuchItemException {
+        for (Item item: items) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+
+        throw new NoSuchItemException();
     }
 
     public double getPrice(String itemName) {
-        return itemPrice.get(itemName);
+        try {
+            return getItemByName(itemName).getPrice();
+        } catch (NoSuchItemException e) {
+            return 0.0;
+        }
     }
 
     public void getFullMenu() {
@@ -29,40 +36,36 @@ public class Menu {
     }
 
     public Item newItem(String name) throws NoSuchItemException {
-        if (itemPrice.get(name) == null || itemType.get(name) == null) {
+        try {
+            Item item = getItemByName(name);
+            return (Item) item.clone();
+        } catch (CloneNotSupportedException e) {
             throw new NoSuchItemException();
         }
-
-        ItemType type = itemType.get(name);
-        Item newItem;
-
-        switch (type) {
-            case DRINK:
-                newItem = new Drink(name, itemPrice.get(name));
-                break;
-            case PSIZE:
-                newItem = new PizzaSize(name, itemPrice.get(name));
-                break;
-            case PTOPPING:
-                newItem = new PizzaTopping(name, itemPrice.get(name));
-                break;
-            case PTYPE:
-                newItem = new PizzaType(name, itemPrice.get(name), pizzaTypeMethods.get(name));
-                break;
-            default:
-                newItem = null;
-        }
-
-        return newItem;
     }
 
-    public Item newItemByIndex(int idx) throws NoSuchItemException, IndexOutOfBoundsException {
-        String name = items.get(idx);
-        return newItem(name);
+    public Item newItemByIndex(int idx) throws NoSuchItemException {
+        try {
+            return (Item) items.get(idx).clone();
+        } catch (IndexOutOfBoundsException e) {
+            throw new NoSuchItemException();
+        } catch (CloneNotSupportedException e) {
+            throw new NoSuchItemException();
+        }
     }
 
     @Override
     public String toString() {
-        return "Menu placeholder";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            sb.append(Integer.toString(i + 1));
+            sb.append(". ");
+            sb.append(items.get(i).getName());
+            sb.append("    ");
+            sb.append(items.get(i).getPrice());
+            sb.append("\n");
+        }
+        return sb.toString();
     }
+
 }

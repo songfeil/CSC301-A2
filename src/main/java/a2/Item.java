@@ -1,6 +1,6 @@
 package a2;
 
-public class Item {
+public class Item implements Cloneable {
     private String name;
     private double price;
 
@@ -18,9 +18,18 @@ public class Item {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return this.name;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
 

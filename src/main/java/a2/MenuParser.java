@@ -11,15 +11,14 @@ public class MenuParser {
     }
 
     public Menu readMenu() {
-        ArrayList<String> items = new ArrayList<String>();
-        HashMap<String, Double> itemPrice = new HashMap<String, Double>();
-        HashMap<String, ItemType> itemType = new HashMap<String, ItemType>();
-        HashMap<String, String> pizzaTypeMethods = new HashMap<String, String>();
+        ArrayList<Item> items = new ArrayList<Item>();
 
         // TODO
-        itemPrice.put("Coke", 1.0);
-        itemPrice.put("Diet Coke", 2.5);
+        items.add(new Pepperoni(1.0));
+        items.add(new Neapolitan(2.0));
+        items.add(new Margherita(3.0));
+        items.add(new Vegetarian(4.0));
 
-        return new Menu(items, itemPrice, itemType, pizzaTypeMethods);
+        return new Menu(items);
     }
 }

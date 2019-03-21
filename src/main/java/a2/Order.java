@@ -4,25 +4,19 @@ import java.util.List;
 
 public class Order {
     private int id;
-    private List<Pizza> pizzas;
-    private List<Drink> drinks;
+    private List<Item> items;
 
-    Order(int id, List<Pizza> pizzas, List<Drink> drinks) {
+    Order(int id, List<Item> items) {
         this.id = id;
-        this.pizzas = pizzas;
-        this.drinks = drinks;
+        this.items = items;
     }
 
     public int getId() {
         return id;
     }
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
-
-    public List<Drink> getDrinks() {
-        return drinks;
+    public List<Item> getItems() {
+        return items;
     }
 
     public double getPrice() {
@@ -39,16 +33,10 @@ public class Order {
         sb.append("ID: ");
         sb.append(Integer.toString(id));
 
-        // Add Pizza
-        sb.append(" | Pizzas: ");
-        for (Pizza p: pizzas) {
-            sb.append(p);
-            sb.append(" ");
-        }
-
-        // Add Drink
-        sb.append("Drinks: ");
-        for (Drink d: drinks) {
+        // Add Item
+        sb.append("Items: ");
+        sb.append("\n");
+        for (Item d: items) {
             sb.append(d);
             sb.append(" ");
         }

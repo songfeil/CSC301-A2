@@ -1,18 +1,56 @@
 package a2;
 
 public class PizzaType extends Item{
-    private String creatingMethods;
-
-    public PizzaType(String name, double price, String methods) {
+    public PizzaType(String name, double price) {
         super(name, price);
-        this.creatingMethods = methods;
     }
 
     public void make() {
         System.out.println("Processing method for pizza type: " + this.getName());
     }
 
-    public String getCreatingMethods() {
-        return creatingMethods;
+}
+
+class Pepperoni extends PizzaType {
+    public Pepperoni(double price) {
+        super("Pepperoni", price);
+    }
+
+    @Override
+    public void make() {
+        System.out.println("Making Pepperoni");
+    }
+}
+
+class Margherita extends PizzaType {
+    public Margherita(double price) {
+        super("Margherita", price);
+    }
+
+    @Override
+    public void make() {
+        System.out.println("Making Margherita");
+    }
+}
+
+class Vegetarian extends PizzaType {
+    public Vegetarian(double price) {
+        super("Vegetarian", price);
+    }
+
+    @Override
+    public void make() {
+        System.out.println("Making Vegetarian");
+    }
+}
+
+class Neapolitan extends PizzaType {
+    public Neapolitan(double price) {
+        super("Neapolitan", price);
+    }
+
+    @Override
+    public void make() {
+        System.out.println("Making Neapolitan");
     }
 }

@@ -2,22 +2,24 @@ package a2;
 
 import java.util.List;
 
-public class Pizza {
-    private PizzaSize size;
+public class Pizza extends Item {
+    private Item size;
     private PizzaType type;
-    private List<PizzaTopping> toppings;
+    private List<Item> toppings;
 
-    Pizza(PizzaSize size, PizzaType type, List<PizzaTopping> toppings) {
+    Pizza(Item size, PizzaType type, List<Item> toppings) {
+        super("Pizza", 0.0);
         this.size = size;
         this.type = type;
         this.toppings = toppings;
     }
 
-    double getPrice() {
+    @Override
+    public double getPrice() {
         double price = 0.0;
         price += size.getPrice();
         price += type.getPrice();
-        for (PizzaTopping pt : toppings) {
+        for (Item pt : toppings) {
             price += pt.getPrice();
         }
         return price;
@@ -40,7 +42,7 @@ public class Pizza {
 
         // Add topping
         sb.append("Toppings: ");
-        for (PizzaTopping pt: toppings) {
+        for (Item pt: toppings) {
             sb.append(pt);
             sb.append(" ");
         }
@@ -49,12 +51,12 @@ public class Pizza {
     }
 
     public static void main(String[] args) {
-        PizzaType type = new PizzaType("Vegetarian", 0.0, "Lalala");
-        PizzaSize size = new PizzaSize("Large", 1.0);
+        PizzaType type = new Vegetarian(0.0);
+        Item size = new Item("Large", 1.0);
 
         PizzaBuilder pb = new PizzaBuilder();
         try {
-            Pizza p = pb.addSize(size).addType(type).addTopping(new PizzaTopping("T1", 1.0)).addTopping(new PizzaTopping("T2", 0.5)).build();
+            Pizza p = pb.addSize(size).addType(type).addTopping(new Item("T1", 1.0)).addTopping(new Item("T2", 0.5)).build();
             System.out.println(p);
         } catch (InvalidPizzaException e) {
             e.printStackTrace();

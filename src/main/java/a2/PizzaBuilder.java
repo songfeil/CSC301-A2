@@ -3,22 +3,22 @@ package a2;
 import java.util.ArrayList;
 
 public class PizzaBuilder{
-    private PizzaSize size;
+    private Item size;
     private PizzaType type;
-    private ArrayList<PizzaTopping> toppings;
+    private ArrayList<Item> toppings;
 
     public PizzaBuilder() {
         size = null;
         type = null;
-        toppings = new ArrayList<PizzaTopping>();
+        toppings = new ArrayList<Item>();
     }
 
-    public PizzaBuilder addTopping(PizzaTopping p) {
+    public PizzaBuilder addTopping(Item p) {
         toppings.add(p);
         return this;
     }
 
-    public PizzaBuilder addSize(PizzaSize p) {
+    public PizzaBuilder addSize(Item p) {
         size = p;
         return this;
     }
@@ -45,7 +45,5 @@ public class PizzaBuilder{
 }
 
 class InvalidPizzaException extends Exception {
-    InvalidPizzaException(String errorMessage) {
-        super(errorMessage);
-    }
+    InvalidPizzaException(String errorMessage) {}
 }

@@ -5,41 +5,29 @@ import java.util.ArrayList;
 public class OrderBuilder{
     static private int currOrderId = 0;
 
-    private ArrayList<Pizza> pizzas;
-    private ArrayList<Drink> drinks;
+    private ArrayList<Item> items;
 
     public OrderBuilder() {
-        pizzas = new ArrayList<Pizza>();
-        drinks = new ArrayList<Drink>();
+        items = new ArrayList<Item>();
     }
 
-    public OrderBuilder addPizza(Pizza p) {
-        pizzas.add(p);
+    public OrderBuilder addItem(Item p) {
+        items.add(p);
         return this;
     }
 
-    public OrderBuilder addDrink(Drink d) {
-        drinks.add(d);
-        return this;
-    }
-
-    public OrderBuilder removePizza(int idx) {
-        pizzas.remove(idx);
-        return this;
-    }
-
-    public OrderBuilder removeDrink(int idx) {
-        pizzas.remove(idx);
+    public OrderBuilder removeItem(int idx) {
+        items.remove(idx);
         return this;
     }
 
     public Order build() throws EmptyOrderException {
         // Throw an error if the order is empty
-        if (pizzas.size() == 0 && drinks.size() == 0) {
+        if (items.size() == 0) {
             throw new EmptyOrderException("This order is empty.");
         }
 
-        return new Order(++currOrderId, pizzas, drinks);
+        return new Order(++currOrderId, items);
     }
 }
 

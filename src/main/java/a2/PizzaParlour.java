@@ -28,16 +28,16 @@ public class PizzaParlour {
                     break;
                 case 1:
                     try {
-                        Pizza newPizza = createPizza(scanner);
-                        ob.addPizza(newPizza);
+                        Item newPizza = createPizza(scanner);
+                        ob.addItem(newPizza);
                     } catch (InvalidPizzaException e) {
                         System.out.println("Sorry, this is an invalid pizza!");
                     }
                     break;
                 case 2:
                     try {
-                        Drink newDrink = createDrink(scanner);
-                        ob.addDrink(newDrink);
+                        Item newDrink = createDrink(scanner);
+                        ob.addItem(newDrink);
                     } catch (NoSuchItemException e) {
                         System.out.println("Sorry, this is an invalid drink!");
                     }
@@ -55,14 +55,14 @@ public class PizzaParlour {
 
     }
 
-    public Pizza createPizza(Scanner scanner) throws InvalidPizzaException {
+    public Item createPizza(Scanner scanner) throws InvalidPizzaException {
         try {
             PizzaBuilder pb = new PizzaBuilder();
 
             System.out.println("Select a size:");
             System.out.println(controller.sizeMenu.toString());
             int sizeID = Integer.valueOf(scanner.nextLine());
-            pb.addSize((PizzaSize) controller.sizeMenu.newItemByIndex(sizeID));
+            pb.addSize(controller.sizeMenu.newItemByIndex(sizeID));
 
             System.out.println("Select a type:");
             System.out.println(controller.typeMenu.toString());
@@ -78,7 +78,7 @@ public class PizzaParlour {
                 if (toppingID == 0) {
                     done = true;
                 } else {
-                    pb.addTopping((PizzaTopping) controller.sizeMenu.newItemByIndex(toppingID));
+                    pb.addTopping(controller.sizeMenu.newItemByIndex(toppingID));
                 }
             }
 
@@ -89,13 +89,13 @@ public class PizzaParlour {
 
     }
 
-    public Drink createDrink(Scanner scanner) throws NoSuchItemException {
+    public Item createDrink(Scanner scanner) throws NoSuchItemException {
         System.out.println("Select the drink you like:");
         System.out.println(controller.drinkMenu.toString());
 
         int drinkId = Integer.valueOf(scanner.nextLine());
 
-        return (Drink) controller.drinkMenu.newItemByIndex(drinkId);
+        return controller.drinkMenu.newItemByIndex(drinkId);
     }
 
     public void printOptions() {

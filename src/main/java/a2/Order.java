@@ -5,10 +5,12 @@ import java.util.List;
 public class Order {
     private int id;
     private List<Item> items;
+    private Delivery delivery;
 
-    Order(int id, List<Item> items) {
+    Order(int id, List<Item> items, Delivery delivery) {
         this.id = id;
         this.items = items;
+        this.delivery = delivery;
     }
 
     public int getId() {
@@ -46,5 +48,6 @@ public class Order {
 
         return sb.toString();
     }
+
 }
 

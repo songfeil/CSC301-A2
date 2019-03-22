@@ -27,6 +27,19 @@ public class Order {
         return price;
     }
 
+    public void addItem(Item item) {
+        this.items.add(item);
+    }
+
+    public void removeItemByIndex(int idx) {
+        try {
+            this.items.remove(idx - 1);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid input!");
+        }
+
+    }
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

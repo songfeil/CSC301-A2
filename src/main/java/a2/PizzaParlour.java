@@ -115,8 +115,8 @@ public class PizzaParlour {
 
     private void cancelOrder(Scanner scanner) {
         if (listOrder()) {
-            int idx = Integer.valueOf(scanner.nextLine());
-            controller.cancelOrderByIndex(idx);
+            Order order = getOrderByIdx(scanner);
+            controller.cancelOrder(order);
 
             System.out.println(seperateLine);
             System.out.println("Cancelled");
@@ -159,10 +159,16 @@ public class PizzaParlour {
         System.out.println("6 - Exit");
     }
 
+    private Order getOrderByIdx(Scanner scanner) {
+        System.out.println("Enter order number: ");
+        int idx = Integer.valueOf(scanner.nextLine());
+        return controller.getOrderByIndex(idx);
+    }
+
     private void pickUpOrDelivery(Scanner scanner) {
         if (listOrder()) {
-            int idx = Integer.valueOf(scanner.nextLine());
-            Order order = controller.getOrderByIndex(idx);
+            Order order = getOrderByIdx(scanner);
+            if (order == null) {return;}
 
             System.out.println("--- Select a method: ---");
             System.out.println("1. Pickup from store");
@@ -174,27 +180,67 @@ public class PizzaParlour {
             String address;
             switch (idx1) {
                 case 1:
-                    controller.cancelOrderByIndex(idx);
+                    controller.cancelOrder(order);
                     break;
                 case 2:
                     getAddress(scanner);
-                    controller.cancelOrderByIndex(idx);
+                    controller.cancelOrder(order);
                     break;
                 case 3:
                     address = getAddress(scanner);
                     Delivery uberEats = new UberEats(address, order);
                     uberEats.saveToFile();
-                    controller.cancelOrderByIndex(idx);
+                    controller.cancelOrder(order);
                     break;
                 case 4:
                     address = getAddress(scanner);
                     Delivery foodora = new Foodora(address, order);
                     foodora.saveToFile();
-                    controller.cancelOrderByIndex(idx);
+                    controller.cancelOrder(order);
                     break;
                 default:
                     System.out.println("Invalid input");
 
+            }
+        }
+    }
+
+    private void modifyOrder(Scanner scanner) {
+        if (listOrder()) {
+            Order order = getOrderByIdx(scanner);
+            if (order == null) {return;}
+
+            System.out.println(order);
+
+            System.out.println("1. Add Pizza");
+            System.out.println("2. Add Drink");
+            System.out.println("3. Remove Item");
+
+            int idx = Integer.valueOf(scanner.nextLine());
+            switch (idx) {
+                case 1:
+                    try {
+                        Item pizza = createPizza(scanner);
+                        order.addItem(pizza);
+                    } catch (InvalidPizzaException e) {
+                        System.out.println("Invalid Pizza");
+                    }
+                    break;
+                case 2:
+                    try {
+                        Item drink = createItem(scanner, controller.menuMap.get("Drink"));
+                        order.addItem(drink);
+                    } catch (NoSuchItemException e) {
+                        System.out.println("Invalid Drink");
+                    }
+                    break;
+                case 3:
+                    System.out.println(order);
+                    int idx1 = Integer.valueOf(scanner.nextLine());
+                    order.removeItemByIndex(idx1);
+                    break;
+                default:
+                    System.out.println("Invalid input");
             }
         }
     }
@@ -219,6 +265,10 @@ public class PizzaParlour {
                     break;
                 case 1:
                     pp.createOrder(scanner);
+                    currState = 0;
+                    continue;
+                case 2:
+                    pp.modifyOrder(scanner);
                     currState = 0;
                     continue;
                 case 3:

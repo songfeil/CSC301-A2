@@ -18,11 +18,9 @@ public class Controller {
         orders.add(e);
     }
 
-    public void cancelOrderByIndex(int idx) {
-        try {
-            orders.remove(idx - 1);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("No order with order ID " + Integer.toString(idx - 1));
+    public void cancelOrder(Order o) {
+        if (o != null) {
+            orders.remove(o);
         }
     }
 

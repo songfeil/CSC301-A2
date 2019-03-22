@@ -1,6 +1,4 @@
 package a2;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
 import java.util.Map;
 import java.util.Scanner;
 
@@ -8,8 +6,8 @@ public class PizzaParlour {
     private static final String seperateLine = "=======================================================";
     private Controller controller;
 
-    PizzaParlour() {
-        this.controller = new Controller();
+    PizzaParlour(String filename) {
+        this.controller = new Controller(filename);
     }
 
     void success(String str) {
@@ -253,7 +251,7 @@ public class PizzaParlour {
     public static void main(String[] args) {
         System.out.println("Welcome to 301 Pizza!: ");
 
-        PizzaParlour pp = new PizzaParlour();
+        PizzaParlour pp = new PizzaParlour("menu.json");
         Scanner scanner = new Scanner(System.in);
 
         int currState = 0;

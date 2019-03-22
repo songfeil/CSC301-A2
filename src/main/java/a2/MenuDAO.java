@@ -1,16 +1,20 @@
 package a2;
 
-import jdk.nashorn.internal.parser.JSONParser;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class MenuDAO {
     private Map<String, Menu> menuMap;
-
-    MenuDAO() {}
 
     MenuDAO(String filename) {
         menuMap = new HashMap<String, Menu>();
@@ -18,38 +22,49 @@ public class MenuDAO {
     }
 
     private void readFromJSON(String filename) {
+        //JSON parser object to parse read file
+        JSONParser parser = new JSONParser();
 
+        try
+        {
+            Object obj = parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) obj;
+            Menu drinks = getMenu(jsonObject, "Drink");
+            Menu types = getMenu(jsonObject, "Type");
+            Menu toppings = getMenu(jsonObject, "Toppings");
+            Menu sizes = getMenu(jsonObject, "Size");
+            menuMap.put("Drink", drinks);
+            menuMap.put("Size", sizes);
+            menuMap.put("Toppings", toppings);
+            menuMap.put("Type", types);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Not found menu.json, exit now.");
+            System.exit(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private Menu getMenu(JSONObject jsonobj,String category) {
+        // loop array
+        JSONArray type = (JSONArray) jsonobj.get(category);
+        Iterator<JSONObject> iterator = type.iterator();
+        Menu menu = new Menu();
+        while (iterator.hasNext()) {
+            JSONObject obj = iterator.next();
+            String name = obj.keySet().iterator().next().toString();
+            Double price = Double.valueOf(obj.get(name).toString());
+            menu.addItem(new Item(name, price));
+        }
+        return menu;
     }
 
     public Map<String, Menu> getMenuMap() {
-        return getSampleMap();
-    }
-
-    private Map<String, Menu> getSampleMap() {
-        HashMap<String, Menu> sampleMap = new HashMap<String, Menu>();
-        Menu drinks = new Menu();
-        drinks.addItem(new Item("Coke", 1.0));
-        drinks.addItem(new Item("Diet Coke", 2.0));
-        Menu sizes = new Menu();
-        sizes.addItem(new Item("Large", 1.25));
-        sizes.addItem(new Item("Medium", 3.45));
-        Menu toppings = new Menu();
-        toppings.addItem(new Item("Toppings 1", 1.0));
-        toppings.addItem(new Item("toppings 2", 2.5));
-        Menu types = new Menu();
-        PizzaTypeFactory ptf = new PizzaTypeFactory();
-        try {
-            types.addItem(ptf.generateType("Pepperoni", 4.0));
-            types.addItem(ptf.generateType("Margherita", 8.0));
-        } catch (Exception ignored) {}
-
-        sampleMap.put("Drink", drinks);
-        sampleMap.put("Size", sizes);
-        sampleMap.put("Toppings", toppings);
-        sampleMap.put("Type", types);
-
-
-        return sampleMap;
+        return menuMap;
     }
 
     public static void main(String[] args) {

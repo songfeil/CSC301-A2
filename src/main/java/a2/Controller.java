@@ -7,8 +7,8 @@ public class Controller {
     private ArrayList<Order> orders;
     public Map<String, Menu> menuMap;
 
-    Controller() {
-        MenuDAO dao = new MenuDAO();
+    Controller(String filename) {
+        MenuDAO dao = new MenuDAO(filename);
         menuMap = dao.getMenuMap();
 
         orders = new ArrayList<Order>();

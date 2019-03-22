@@ -5,12 +5,10 @@ import java.util.List;
 public class Order {
     private int id;
     private List<Item> items;
-    private Delivery delivery;
 
-    Order(int id, List<Item> items, Delivery delivery) {
+    Order(int id, List<Item> items) {
         this.id = id;
         this.items = items;
-        this.delivery = delivery;
     }
 
     public int getId() {
@@ -22,29 +20,32 @@ public class Order {
     }
 
     public double getPrice() {
-        return 0.0;
+        double price = 0.0;
+        for (Item item: items) {
+            price += item.getPrice();
+        }
+        return price;
     }
 
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("--- Order ---\n");
-
-        // Add Id
-        sb.append("ID: ");
+        sb.append("--- Order ID: ");
         sb.append(Integer.toString(id));
+        sb.append("---\n");
 
-        // Add Item
-        sb.append("Items: ");
-        sb.append("\n");
-        for (Item d: items) {
-            sb.append(d);
-            sb.append(" ");
+        for (int i = 0; i < items.size(); i++) {
+            sb.append(Integer.toString(i + 1));
+            sb.append(". ");
+            sb.append(items.get(i));
+            sb.append("\n");
         }
 
         sb.append("\n");
-        sb.append("-------------");
+        sb.append("Total Price: ");
+        sb.append(Double.toString(getPrice()));
+        sb.append("\n");
 
         return sb.toString();
     }

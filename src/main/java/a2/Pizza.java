@@ -29,23 +29,21 @@ public class Pizza extends Item {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Pizza  |  ");
-
-        // Add size
-        sb.append("Size: ");
-        sb.append(size.toString());
-
-        // Add type
-        sb.append("  |  Type: ");
-        sb.append(type.toString());
-        sb.append("\n");
+        sb.append(size.getName());
+        sb.append(" ");
+        sb.append(type.getName());
+        sb.append(" ");
+        sb.append("Pizza, ");
 
         // Add topping
-        sb.append("Toppings: ");
+        sb.append("with ");
         for (Item pt: toppings) {
-            sb.append(pt);
-            sb.append(" ");
+            sb.append(pt.getName());
+            sb.append(", ");
         }
+
+        sb.append("\t");
+        sb.append(this.getPrice());
 
         return sb.toString();
     }

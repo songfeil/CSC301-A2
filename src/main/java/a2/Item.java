@@ -24,7 +24,7 @@ public class Item implements Cloneable {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.getName() + '\t' + this.getPrice();
     }
 
     @Override

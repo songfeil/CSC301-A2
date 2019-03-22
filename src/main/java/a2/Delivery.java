@@ -1,50 +1,44 @@
 package a2;
 
-enum DeliveryMethod {
-    UBEREATS,
-    FOODORA,
-    PICKUP
-}
-
 public class Delivery {
-    private DeliveryMethod method;
-    private String address;
+    protected String address;
+    protected Order order;
 
-    public Delivery(DeliveryMethod method, String address) {
-        this.method = method;
+    Delivery(String address, Order order) {
         this.address = address;
+        this.order = order;
     }
 
-    public void saveToFile(Order order) {}
+    public void saveToFile() {}
 }
 
 class UberEats extends Delivery {
-    UberEats(String address) {
-        super(DeliveryMethod.UBEREATS, address);
+    UberEats(String address, Order order) {
+        super(address, order);
     }
 
     @Override
-    public void saveToFile(Order order) {
-        super.saveToFile(order);
+    public void saveToFile() {
+        System.out.println(this.order);
     }
 }
 
 class Foodora extends Delivery {
-    Foodora(String address) {
-        super(DeliveryMethod.FOODORA, address);
+    Foodora(String address, Order order) {
+        super(address, order);
     }
 
     @Override
-    public void saveToFile(Order order) {
-        super.saveToFile(order);
+    public void saveToFile() {
+        super.saveToFile();
     }
 }
 
 class PickUp extends Delivery {
-    PickUp(String address) {
-        super(DeliveryMethod.PICKUP, address);
+    PickUp(String address, Order order) {
+        super(address, order);
     }
 
     @Override
-    public void saveToFile(Order order) { }
+    public void saveToFile() { }
 }

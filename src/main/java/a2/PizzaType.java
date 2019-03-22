@@ -54,3 +54,22 @@ class Neapolitan extends PizzaType {
         System.out.println("Making Neapolitan");
     }
 }
+
+class PizzaTypeFactory {
+    Item generateType(String type, double price) throws NotSupportedPizzaTypeException {
+
+        if (type.equalsIgnoreCase("Pepperoni")) {
+            return new Pepperoni(price);
+        } else if (type.equalsIgnoreCase("Margherita")) {
+            return new Margherita(price);
+        } else if (type.equalsIgnoreCase("Vegetarian")) {
+            return new Vegetarian(price);
+        } else if (type.equalsIgnoreCase("Neapolitan")) {
+            return new Neapolitan(price);
+        }
+
+        throw new NotSupportedPizzaTypeException();
+    }
+}
+
+class NotSupportedPizzaTypeException extends Exception {}

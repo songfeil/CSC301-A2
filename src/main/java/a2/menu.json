@@ -1,0 +1,32 @@
+{
+	"Drink": [
+		{"Coke": 1.25},
+		{"Diet Coke": 1.50},
+		{"Coke Zero": 1.50}, 
+		{"Pepsi": 1.25},
+		{"Diet Pepsi": 1.50},
+		{"Dr. Pepper": 1.75},
+		{"Water": 1},
+		{"Juice": 2}
+	],
+	"Toppings": [
+		{"Olives": 0.1},
+		{"Tomatoes": 0.2},
+		{"Mushrooms": 0.3},
+		{"Jalapenos": 0.4},
+		{"Chicken": 0.5},
+		{"Beef": 0.6},
+		{"Pepperoni": 0.7}
+	],
+	"Size": [
+		{"Small": 3.5},
+		{"Medium": 5.5},
+		{"Large": 7.5}
+	],
+	"Type": [
+		{"Pepperoni": 1.25},
+		{"Margherita": 1.25},
+		{"Vegetarian": 1.25},
+		{"Neapolitan": 1.25}
+	]
+}

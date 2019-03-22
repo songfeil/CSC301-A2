@@ -7,10 +7,15 @@ public class Menu {
     private ArrayList<Item> items;
 
     public Menu() {
+        this.items = new ArrayList<Item>();
     }
 
     public Menu(ArrayList<Item> items) {
         this.items = items;
+    }
+
+    public void addItem(Item e) {
+        this.items.add(e);
     }
 
     private Item getItemByName(String name) throws NoSuchItemException {
@@ -23,12 +28,8 @@ public class Menu {
         throw new NoSuchItemException();
     }
 
-    public double getPrice(String itemName) {
-        try {
-            return getItemByName(itemName).getPrice();
-        } catch (NoSuchItemException e) {
-            return 0.0;
-        }
+    public double getPrice(String itemName) throws NoSuchItemException {
+        return getItemByName(itemName).getPrice();
     }
 
     public void getFullMenu() {
@@ -46,7 +47,7 @@ public class Menu {
 
     public Item newItemByIndex(int idx) throws NoSuchItemException {
         try {
-            return (Item) items.get(idx).clone();
+            return (Item) items.get(idx - 1).clone();
         } catch (IndexOutOfBoundsException e) {
             throw new NoSuchItemException();
         } catch (CloneNotSupportedException e) {
@@ -61,7 +62,7 @@ public class Menu {
             sb.append(Integer.toString(i + 1));
             sb.append(". ");
             sb.append(items.get(i).getName());
-            sb.append("    ");
+            sb.append("\t");
             sb.append(items.get(i).getPrice());
             sb.append("\n");
         }
